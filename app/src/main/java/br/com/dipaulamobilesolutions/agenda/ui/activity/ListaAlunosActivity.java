@@ -24,7 +24,7 @@ import static br.com.dipaulamobilesolutions.agenda.ui.activity.ConstantesActivit
 public class ListaAlunosActivity extends AppCompatActivity {
 
     private FloatingActionButton fabAdicionaAluno;
-    private final ListaAlunosView listaAlunosView = new ListaAlunosView(this);
+    private ListaAlunosView listaAlunosView;
     private Context context;
 
 
@@ -33,6 +33,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alunos);
         fabAdicionaAluno = findViewById(R.id.fabAdicionaAluno);
+        listaAlunosView = new ListaAlunosView(this);
         configuraFabNovoAluno();
         configuraLista();
     }

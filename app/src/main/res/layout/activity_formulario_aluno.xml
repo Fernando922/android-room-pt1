@@ -20,6 +20,15 @@
             android:importantForAutofill="no" />
 
         <EditText
+            android:id="@+id/etSobrenome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="@string/sobrenome"
+            android:inputType="text"
+            android:importantForAutofill="no" />
+
+        <EditText
             android:id="@+id/etTelefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

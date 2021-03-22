@@ -7,7 +7,10 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import br.com.dipaulamobilesolutions.agenda.dao.AlunoDAO;
+import androidx.room.Room;
+
+import br.com.dipaulamobilesolutions.agenda.database.AgendaDatabase;
+import br.com.dipaulamobilesolutions.agenda.database.dao.AlunoDAO;
 import br.com.dipaulamobilesolutions.agenda.model.activity.Aluno;
 import br.com.dipaulamobilesolutions.agenda.ui.adapter.ListaAlunosAdapter;
 
@@ -15,12 +18,17 @@ public class ListaAlunosView {
 
 
     private Context context;
-    private final AlunoDAO dao = new AlunoDAO();
+    private final AlunoDAO dao;
     private ListaAlunosAdapter adapter;
 
     public ListaAlunosView(Context context){
         this.context = context;
+        AlunoDAO dao = Room.databaseBuilder(context, AgendaDatabase.class, "agenda.db")
+                .allowMainThreadQueries()
+                .build()
+                .getRoomAlunoDAO();
 
+        this.dao = AgendaDatabase.getInstance(context).getRoomAlunoDAO();
     }
 
     public void confirmaRemocao(MenuItem item) {

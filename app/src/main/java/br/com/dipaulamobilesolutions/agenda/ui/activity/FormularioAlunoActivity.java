@@ -11,7 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.dipaulamobilesolutions.agenda.R;
-import br.com.dipaulamobilesolutions.agenda.dao.AlunoDAO;
+import br.com.dipaulamobilesolutions.agenda.database.AgendaDatabase;
+import br.com.dipaulamobilesolutions.agenda.database.dao.AlunoDAO;
 import br.com.dipaulamobilesolutions.agenda.model.activity.Aluno;
 
 import static br.com.dipaulamobilesolutions.agenda.ui.activity.ConstantesActivities.CHAVE_ALUNO;
@@ -23,10 +24,11 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     public static final String TITULO_APPBAR_NOVO_ALUNO = "Novo aluno";
     private static final String TITULO_APPBAR_EDITA_ALUNO = "Edita aluno";
     private EditText etNome;
+    private EditText etSobrenome;
     private EditText etTelefone;
     private EditText etEmail;
     private Aluno aluno;
-    final AlunoDAO dao = new AlunoDAO();
+    private AlunoDAO dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,9 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_formulario_aluno);
         inicializarCampos();
         carregaAluno();
+
+        AgendaDatabase database = AgendaDatabase.getInstance(this);
+        this.dao = database.getRoomAlunoDAO();
     }
 
     @Override
@@ -44,7 +49,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.menu_salvar){
+        if (item.getItemId() == R.id.menu_salvar) {
             finalizaFormulario();
         }
         return super.onOptionsItemSelected(item);
@@ -70,6 +75,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
     private void preencheCampos() {
         etNome.setText(aluno.getNome());
+        etSobrenome.setText(aluno.getSobrenome());
         etTelefone.setText(aluno.getTelefone());
         etEmail.setText(aluno.getEmail());
     }
@@ -87,17 +93,20 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
     private void inicializarCampos() {
         etNome = findViewById(R.id.etnome);
+        etSobrenome = findViewById(R.id.etSobrenome);
         etTelefone = findViewById(R.id.etTelefone);
         etEmail = findViewById(R.id.etEmail);
     }
 
     private void preencheAluno() {
         String nome = etNome.getText().toString();
+        String sobrenome = etSobrenome.getText().toString();
         String telefone = etTelefone.getText().toString();
         String email = etEmail.getText().toString();
 
 
         aluno.setNome(nome);
+        aluno.setSobrenome(sobrenome);
         aluno.setTelefone(telefone);
         aluno.setEmail(email);
     }
